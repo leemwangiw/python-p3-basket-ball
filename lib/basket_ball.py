@@ -90,11 +90,10 @@ def game_dict():
                 },
             ],
         },
-            
         "away": {
             "team_name": "Washington Wizards",
             "colors": ["Red", "White", "Navy Blue"],
-            "players": [   
+            "players": [
                 {
                     "name": "Bradley Beal",
                     "number": 3,
@@ -182,3 +181,50 @@ def game_dict():
             ]
         }
     }
+
+def num_points_per_game(player_name):
+    for team in game_dict().values():
+        for player in team["players"]:
+            if player["name"] == player_name:
+                return player["points_per_game"]
+
+def player_age(player_name):
+    for team in game_dict().values():
+        for player in team["players"]:
+            if player["name"] == player_name:
+                return player["age"]
+
+def team_colors(team_name):
+    for team in game_dict().values():
+        if team["team_name"] == team_name:
+            return team["colors"]
+
+def team_names():
+    return [team["team_name"] for team in game_dict().values()]
+
+def player_numbers(team_name):
+    for team in game_dict().values():
+        if team["team_name"] == team_name:
+            return [player["number"] for player in team["players"]]
+
+def player_stats(player_name):
+    for team in game_dict().values():
+        for player in team["players"]:
+            if player["name"] == player_name:
+                return player
+
+def average_rebounds_by_shoe_brand():
+    brands_rebounds = {}
+    
+    for team in game_dict().values():
+        for player in team["players"]:
+            brand = player["shoe_brand"]
+            rebounds = player["rebounds_per_game"]
+            if brand in brands_rebounds:
+                brands_rebounds[brand].append(rebounds)
+            else:
+                brands_rebounds[brand] = [rebounds]
+    
+    for brand, rebounds in brands_rebounds.items():
+        average_rebounds = sum(rebounds) / len(rebounds)
+        print(f"{brand}: {average_rebounds:.2f}")
